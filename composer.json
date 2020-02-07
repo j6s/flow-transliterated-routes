@@ -1,0 +1,21 @@
+{
+    "name": "j6s/flow-transliterated-routes",
+    "description": "Small package that ties in behat/transliterator with flows IdentityRoutePart to create smart international slugs",
+    "type": "neos-package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johannes Hertenstein",
+            "email": "hello@j6s.dev"
+        }
+    ],
+    "require": {
+        "behat/transliterator": "^1.3.0",
+        "neos/flow": "^5.3||^6.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "J6s\\TransliteratedRoutes\\": "Classes"
+        }
+    }
+}

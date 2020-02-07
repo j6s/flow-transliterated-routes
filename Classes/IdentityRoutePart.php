@@ -1,0 +1,55 @@
+<?php declare(strict_types=1);
+
+namespace J6s\TransliteratedRoutes;
+
+use Behat\Transliterator\Transliterator;
+use Neos\Flow\Mvc\Routing\IdentityRoutePart as FlowIdentityRoutePartAlias;
+
+class IdentityRoutePart extends FlowIdentityRoutePartAlias
+{
+
+    /** @var array */
+    protected $replacements = [
+        'ä' => 'ae',
+        'Ä' => 'Ae',
+        'ö' => 'oe',
+        'Ö' => 'Oe',
+        'ü' => 'ue',
+        'Ü' => 'Ue',
+        'ß' => 'ss',
+    ];
+
+    protected function rewriteForUri($value)
+    {
+        $value = str_replace(
+            array_keys($this->replacements),
+            array_values($this->replacements),
+            $value
+        );
+
+        $value = $this->transliterate($value);
+
+        // Retain original behaviour
+        return parent::rewriteForUri($value);
+    }
+
+    protected function transliterate(string $text): string
+    {
+        if (preg_match('/[\x80-\xff]/', $text) && Transliterator::validUtf8($text)) {
+            $text = Transliterator::utf8ToAscii($text);
+        }
+
+        return $text;
+    }
+
+    public function setOptions(array $options): void
+    {
+        parent::setOptions($options);
+        $this->uriPattern = $options['uriPattern'];
+        $this->objectType = $options['objectType'];
+
+        if (array_key_exists('replacements', $options)) {
+            $this->replacements = $options['replacements'];
+        }
+    }
+}
