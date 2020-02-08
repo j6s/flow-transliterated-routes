@@ -13,6 +13,6 @@ install:
     - '[ $COMPOSER_LOWEST == 1 ] && composer update --prefer-lowest || composer install'
 
 script:
-    - ./vendor/bin/phpcs Classes Tests
-    - ./vendor/bin/phpstan analyze --level 7 Classes
-    - ./vendor/bin/phpunit
+    - ./bin/phpcs Classes Tests
+    - ./bin/phpstan analyze --level 7 Classes
+    - ./bin/phpunit
