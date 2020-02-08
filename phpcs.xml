@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ruleset name="j6s">
+    <!-- Exclude common files that would otherwise be evaluated by phpcs -->
+    <exclude-pattern>*.js</exclude-pattern>
+    <exclude-pattern>*.blade.php</exclude-pattern>
+
+    <!--
+        Base ruleset: PSR2.
+        Learn more about PSR2 at https://www.php-fig.org/psr/psr-2/
+    -->
+    <rule ref="PSR2" />
+
+    <!--
+        Syntax:
+        - Enforce usage of short array style
+        - Lower case constants (`true`, `false`, `null`, ...)
+        - Only allow double quoted strings when necessary
+    -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found" />
+    <rule ref="Generic.PHP.LowerCaseConstant" />
+    <rule ref="Squiz.Strings.DoubleQuoteUsage" />
+
+    <!--
+        Spacing & Indention:
+        - Space around operators (+, -, *, /) incl. string concatenation
+        - No Spaces inside of braces (but around)
+        - Space after cast
+        - Blocks must be indented correctly
+        - Switch/Case statements are one indention level.
+    -->
+    <rule ref="Generic.Formatting.SpaceAfterCast" />
+    <rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing" />
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing">
+        <properties>
+            <property name="ignoreNewlines" value="true" />
+        </properties>
+    </rule>
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1" />
+            <property name="ignoreNewlines" value="true" />
+        </properties>
+    </rule>
+    <rule ref="PSR2.ControlStructures.ControlStructureSpacing" />
+    <rule ref="PEAR.WhiteSpace.ScopeClosingBrace" />
+    <rule ref="Generic.WhiteSpace.ScopeIndent" />
+
+    <!--
+        Bug Prevention:
+        - Warn about assignments in conditions (e.g. `if ($a = $b)` )
+        - Warn about empty statements (e.g. `if ($cond) { }`)
+        - Warn about nonsensical if statements (e.g. `if (true)` )
+        - There must be no content before `<?php`
+        - No error silencing using `@`
+        - Run code through a PHP linter (similar to `php -l`)
+        - Certain functions should not be used in production:
+            - eval
+            - var_dump
+            - xdebug_break
+            - die
+            - exit
+    -->
+    <rule ref="Generic.CodeAnalysis.AssignmentInCondition" />
+    <rule ref="Generic.CodeAnalysis.EmptyStatement" />
+    <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement" />
+    <rule ref="Generic.PHP.CharacterBeforePHPOpeningTag" />
+    <rule ref="Generic.PHP.NoSilencedErrors" />
+    <rule ref="Generic.PHP.Syntax" />
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array"
+                      value="eval=>null,var_dump=>null,xdebug_break=>null,die=>null,exit=>null" />
+        </properties>
+    </rule>
+
+    <!--
+        Quality assurance:
+        - Cyclomatic complexity should be below 20
+        - Nesting level should be below 5
+        - Warn about commented out code
+    -->
+    <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall" />
+    <rule ref="Generic.CodeAnalysis.UselessOverridingMethod" />
+    <rule ref="Generic.Metrics.CyclomaticComplexity">
+        <properties>
+            <property name="complexity" value="20" />
+            <property name="absoluteComplexity" value="50" />
+        </properties>
+    </rule>
+    <rule ref="Generic.Metrics.NestingLevel">
+        <properties>
+            <property name="nestingLevel" value="5" />
+            <property name="absoluteNestingLevel" value="10" />
+        </properties>
+    </rule>
+    <rule ref="Squiz.PHP.CommentedOutCode">
+        <properties>
+            <property name="maxPercentage" value="50" />
+        </properties>
+    </rule>
+</ruleset>

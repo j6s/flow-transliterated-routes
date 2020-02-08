@@ -14,14 +14,20 @@ class FlowIdentityRoutePartTest extends \Neos\Flow\Tests\Unit\Mvc\Routing\Identi
 {
     protected function setUp(): void
     {
-        $this->identityRoutePart = $this->getAccessibleMock(IdentityRoutePart::class, ['createPathSegmentForObject']);
+        $this->identityRoutePart = $this->getAccessibleMock(
+            IdentityRoutePart::class,
+            ['createPathSegmentForObject']
+        );
 
         $this->mockPersistenceManager = $this->createMock(PersistenceManagerInterface::class);
         $this->identityRoutePart->_set('persistenceManager', $this->mockPersistenceManager);
 
         $this->mockReflectionService = $this->createMock(ReflectionService::class);
         $this->mockClassSchema = $this->getMockBuilder(ClassSchema::class)->disableOriginalConstructor()->getMock();
-        $this->mockReflectionService->expects(self::any())->method('getClassSchema')->will(self::returnValue($this->mockClassSchema));
+        $this->mockReflectionService
+            ->expects(self::any())
+            ->method('getClassSchema')
+            ->will(self::returnValue($this->mockClassSchema));
         $this->identityRoutePart->_set('reflectionService', $this->mockReflectionService);
 
         $this->mockObjectPathMappingRepository = $this->createMock(ObjectPathMappingRepository::class);

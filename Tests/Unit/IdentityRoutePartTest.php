@@ -65,8 +65,11 @@ class IdentityRoutePartTest extends UnitTestCase
      * @test
      * @dataProvider provideStrings
      */
-    public function replacesCharactersInCompleteResolutionChain(string $input, array $options, string $expectedOutput): void
-    {
+    public function replacesCharactersInCompleteResolutionChain(
+        string $input,
+        array $options,
+        string $expectedOutput
+    ): void {
         $object = new TestObject();
         $object->myVar = $input;
         $routeVars = [ 'test' => $object ];
@@ -124,5 +127,4 @@ class IdentityRoutePartTest extends UnitTestCase
             ]
         ];
     }
-
 }
