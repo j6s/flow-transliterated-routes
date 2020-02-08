@@ -18,7 +18,7 @@ class IdentityRoutePartTest extends UnitTestCase
     /** @var PersistenceManagerInterface */
     protected $mockPersistenceManager;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         $this->identityRoutePart = $this->getAccessibleMock(IdentityRoutePart::class, ['dummy']);
 

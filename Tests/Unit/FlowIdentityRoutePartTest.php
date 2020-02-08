@@ -12,7 +12,7 @@ use Neos\Flow\Reflection\ReflectionService;
 
 class FlowIdentityRoutePartTest extends \Neos\Flow\Tests\Unit\Mvc\Routing\IdentityRoutePartTest
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         $this->identityRoutePart = $this->getAccessibleMock(
             IdentityRoutePart::class,
