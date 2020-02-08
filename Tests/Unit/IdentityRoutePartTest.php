@@ -127,4 +127,48 @@ class IdentityRoutePartTest extends UnitTestCase
             ]
         ];
     }
+
+    /** @test */
+    public function extractsRelevantInformationFromConfiguration(): void
+    {
+        $this->identityRoutePart->setOptions([
+            'uriPattern' => '__uriPattern__',
+            'objectType' => '__objectType__',
+        ]);
+
+        $this->assertEquals('__uriPattern__', $this->identityRoutePart->getUriPattern());
+        $this->assertEquals('__objectType__', $this->identityRoutePart->getObjectType());
+    }
+
+
+    /** @test */
+    public function passesConfigurationDownToParent(): void
+    {
+        $options = [
+            'uriPattern' => '__uriPattern__',
+            'objectType' => '__objectType__',
+        ];
+        $this->identityRoutePart->setOptions($options);
+        $this->assertEquals($options, $this->identityRoutePart->getOptions());
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidUtf8
+     */
+    public function skipsTransliterationIfStringContainsInvalidUtf8Symbols(string $invalid, string $expected): void
+    {
+        $output = $this->identityRoutePart->_call('rewriteForUri', $invalid);
+        $this->assertEquals($expected, $output);
+    }
+
+    public function provideInvalidUtf8(): array
+    {
+        return [
+            'control group' => [ 'foébar', 'foebar' ],
+            '\xC2' => [ "foé\xC2bar", 'fobar' ],
+            '\xAD' => [ "foé\xADbar", 'fobar' ],
+            '\xE2' => [ "foé\xE2\x80bar", 'fobar' ],
+        ];
+    }
 }

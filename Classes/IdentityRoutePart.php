@@ -21,19 +21,14 @@ class IdentityRoutePart extends FlowIdentityRoutePartAlias
 
     protected function rewriteForUri($value)
     {
-        $value = str_replace(
-            array_keys($this->replacements),
-            array_values($this->replacements),
-            $value
-        );
-
+        $value = strtr($value, $this->replacements);
         $value = $this->transliterate($value);
 
         // Retain original behaviour
         return parent::rewriteForUri($value);
     }
 
-    protected function transliterate(string $text): string
+    private function transliterate(string $text): string
     {
         if (preg_match('/[\x80-\xff]/', $text) && Transliterator::validUtf8($text)) {
             $text = Transliterator::utf8ToAscii($text);

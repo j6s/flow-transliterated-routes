@@ -2,6 +2,12 @@
 
 Small package that ties `behat/transliterator` into the default behaviour of `IdentityRoutePart` of the Flow Framework to create smart international slugs.
 
+## Installation
+
+```bash
+$ composer require j6s/flow-transliterated-routes
+```
+
 ## Example `Routes.yaml`
 
 ```yaml
