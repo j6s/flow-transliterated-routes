@@ -10,12 +10,26 @@
         }
     ],
     "require": {
+        "php": "^7.2",
+
         "behat/transliterator": "^1.3.0",
         "neos/flow": "^5.3||^6.1"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
     "autoload": {
         "psr-4": {
-            "J6s\\TransliteratedRoutes\\": "Classes"
+            "J6s\\TransliteratedRoutes\\": "Classes",
+            "Neos\\Flow\\Tests\\": "Packages/Framework/Neos.Flow/Tests"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "J6s\\TransliteratedRoutes\\Tests\\": "Tests"
+        }
+    },
+    "config": {
+        "vendor-dir": "Packages/Libraries"
     }
 }
