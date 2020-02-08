@@ -1,0 +1,15 @@
+{
+    "timeout": 10,
+    "source": {
+        "directories": [
+            "Classes"
+        ]
+    },
+    "logs": {
+        "text": "infection.log"
+    },
+    "mutators": {
+        "@default": true
+    },
+    "bootstrap": "./Packages/Libraries/autoload.php"
+}
