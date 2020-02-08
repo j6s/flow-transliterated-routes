@@ -1,4 +1,4 @@
-# Flow Transliterated Routes
+# Flow Transliterated Routes [![Build Status](https://travis-ci.org/j6s/flow-transliterated-routes.svg?branch=development)](https://travis-ci.org/j6s/flow-transliterated-routes)
 
 Small package that ties `behat/transliterator` into the default behaviour of `IdentityRoutePart` of the Flow Framework to create smart international slugs.
 
