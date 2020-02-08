@@ -1,0 +1,4 @@
+parameters:
+	autoload_files:
+		- Packages/Libraries/autoload.php
+	level: 7

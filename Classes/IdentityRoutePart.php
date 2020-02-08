@@ -8,7 +8,7 @@ use Neos\Flow\Mvc\Routing\IdentityRoutePart as FlowIdentityRoutePartAlias;
 class IdentityRoutePart extends FlowIdentityRoutePartAlias
 {
 
-    /** @var array */
+    /** @var array<string, string> */
     protected $replacements = [
         'ä' => 'ae',
         'Ä' => 'Ae',
@@ -42,6 +42,7 @@ class IdentityRoutePart extends FlowIdentityRoutePartAlias
         return $text;
     }
 
+    /** @param array<string, mixed> $options */
     public function setOptions(array $options): void
     {
         parent::setOptions($options);
