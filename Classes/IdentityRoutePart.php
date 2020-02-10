@@ -3,9 +3,9 @@
 namespace J6s\TransliteratedRoutes;
 
 use Behat\Transliterator\Transliterator;
-use Neos\Flow\Mvc\Routing\IdentityRoutePart as FlowIdentityRoutePartAlias;
+use Neos\Flow\Mvc\Routing\IdentityRoutePart as FlowIdentityRoutePart;
 
-class IdentityRoutePart extends FlowIdentityRoutePartAlias
+class IdentityRoutePart extends FlowIdentityRoutePart
 {
 
     /** @var array<string, string> */
@@ -19,9 +19,17 @@ class IdentityRoutePart extends FlowIdentityRoutePartAlias
         'ß' => 'ss',
     ];
 
+    /**
+     * @param mixed $value
+     * @return string
+     */
     protected function rewriteForUri($value)
     {
-        $value = strtr($value, $this->replacements);
+        if (!$this->canBeCastToString($value)) {
+            return '';
+        }
+
+        $value = strtr((string) $value, $this->replacements);
         $value = $this->transliterate($value);
 
         // Retain original behaviour
@@ -35,6 +43,13 @@ class IdentityRoutePart extends FlowIdentityRoutePartAlias
         }
 
         return $text;
+    }
+
+    /** @param mixed $value */
+    private function canBeCastToString($value): bool
+    {
+        return \is_scalar($value)
+            || (\is_object($value) && method_exists($value, '__toString'));
     }
 
     /** @param array<string, mixed> $options */

@@ -70,20 +70,8 @@ class IdentityRoutePartTest extends UnitTestCase
         array $options,
         string $expectedOutput
     ): void {
-        $object = new TestObject();
-        $object->myVar = $input;
+        $object = $this->setupTestObject($input);
         $routeVars = [ 'test' => $object ];
-
-        $uuid = (string) Uuid::uuid4();
-        $this->mockPersistenceManager->expects(self::once())
-            ->method('getIdentifierByObject')
-            ->with($object)
-            ->will(self::returnValue($uuid));
-        $this->mockPersistenceManager->expects(self::atLeastOnce())
-            ->method('getObjectByIdentifier')
-            ->with($uuid)
-            ->will(self::returnValue($object));
-
 
         $options['uriPattern'] = '{myVar}';
         $options['objectType'] = TestObject::class;
@@ -170,5 +158,63 @@ class IdentityRoutePartTest extends UnitTestCase
             '\xAD' => [ "foé\xADbar", 'fobar' ],
             '\xE2' => [ "foé\xE2\x80bar", 'fobar' ],
         ];
+    }
+
+    /**
+     * Parent object forces us not to have type annotations, so this test is the next best thing.
+     * @test
+     * @dataProvider provideInvalidInputData
+     * @doesNotPerformAssertions
+     */
+    public function doesNotFailOnInvalidInputData($data): void
+    {
+        $this->identityRoutePart->_call('rewriteForUri', $data);
+    }
+
+    /**
+     * Parent object forces us not to have type annotations, so this test is the next best thing.
+     * @test
+     * @dataProvider provideInvalidInputData
+     */
+    public function doesNotFailOnNullObjectProperty($data): void
+    {
+        $object = $this->setupTestObject($data);
+        $routeVars = [ 'test' => $object ];
+
+        $options['uriPattern'] = '{myVar}';
+        $options['objectType'] = TestObject::class;
+        $this->identityRoutePart->setOptions($options);
+        $this->identityRoutePart->setName('test');
+        $result = $this->identityRoutePart->resolve($routeVars);
+
+        $this->assertTrue($result);
+    }
+
+    public function provideInvalidInputData(): array
+    {
+        return [
+            [ null ],
+            [ [ 'foo' => 'bar' ] ],
+            [ 2 ],
+            [ false ],
+        ];
+    }
+
+    private function setupTestObject($myVar): TestObject
+    {
+        $object = new TestObject();
+        $object->myVar = $myVar;
+
+        $uuid = (string) Uuid::uuid4();
+        $this->mockPersistenceManager->expects(self::once())
+            ->method('getIdentifierByObject')
+            ->with($object)
+            ->will(self::returnValue($uuid));
+        $this->mockPersistenceManager->expects(self::atLeastOnce())
+            ->method('getObjectByIdentifier')
+            ->with($uuid)
+            ->will(self::returnValue($object));
+
+        return $object;
     }
 }
