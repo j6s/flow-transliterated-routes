@@ -1,21 +1,12 @@
 language: php
 
 php:
-    - '7.2'
     - '7.3'
     - '7.4'
-
-env:
-    - COMPOSER_LOWEST=0
-    - COMPOSER_LOWEST=1
-
-matrix:
-    exclude:
-        - php: '7.4'
-          env: COMPOSER_LOWEST=1
+    - '8.0'
 
 install:
-    - '[ $COMPOSER_LOWEST == 1 ] && composer update --prefer-lowest || composer install'
+    - 'composer install'
 
 script:
     - ./bin/phpcs Classes Tests

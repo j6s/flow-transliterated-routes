@@ -3,3 +3,5 @@ composer.lock
 Packages/
 bin/
 infection.log
+.ddev/
+.phpunit.result.cache
