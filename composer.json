@@ -22,13 +22,13 @@
     },
     "autoload": {
         "psr-4": {
-            "J6s\\TransliteratedRoutes\\": "Classes",
-            "Neos\\Flow\\Tests\\": "Packages/Framework/Neos.Flow/Tests"
+            "J6s\\TransliteratedRoutes\\": "Classes"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "J6s\\TransliteratedRoutes\\Tests\\": "Tests"
+            "J6s\\TransliteratedRoutes\\Tests\\": "Tests",
+            "Neos\\Flow\\Tests\\": "Packages/Framework/Neos.Flow/Tests"
         }
     },
     "config": {
